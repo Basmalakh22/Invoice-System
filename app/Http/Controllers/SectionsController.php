@@ -35,9 +35,7 @@ class SectionsController extends Controller
             'description' => $request->description,
             'created_by' => Auth::user()->name,
         ]);
-
-        session()->flash('Add', 'تم اضافة القسم بنجاح');
-        return redirect('/sections');
+        return Redirect::route('sections.index')->with('Add', 'تم اضافة القسم بنجاح');
     }
 
     public function show(Sections $sections)
