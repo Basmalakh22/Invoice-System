@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InvoiceAttachmentController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -36,10 +37,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('/invoices', InvoicesController::class);
+Route::get('/section/{id}', [InvoicesController::class,'getProducts']);
 
 Route::resource('/sections', SectionsController::class);
 
 Route::resource('/products', ProductController::class);
+
+Route::resource('/a', InvoiceAttachmentController::class);
+
 require __DIR__.'/auth.php';
 
 Route::get('/{page}', [AdminController::class,'index']);

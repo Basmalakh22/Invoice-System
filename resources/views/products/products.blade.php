@@ -195,9 +195,10 @@
                             </div>
 
                             <label class="my-1 mr-2" for="inlineFormCustomSelectPref">القسم</label>
-                            <select name="section_name" id="section_name" class="custom-select my-1 mr-sm-2" required>
+                            <select name="section_id" id="section_id" class="form-control" required>
+                                <option value="" selected disabled> --حدد القسم--</option>
                                 @foreach ($sections as $section)
-                                    <option>{{ $section->section_name }}</option>
+                                    <option value="{{ $section->id }}">{{ $section->section_name }}</option>
                                 @endforeach
                             </select>
 
@@ -216,7 +217,7 @@
             </div>
         </div>
 
-        {{-- <!-- delete -->
+        <!-- delete -->
         <div class="modal fade" id="modaldemo9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -242,7 +243,7 @@
                     </form>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
 
     </div>
