@@ -74,7 +74,6 @@ class SectionsController extends Controller
         $section = Sections::findOrFail($id);
         $section->delete();
 
-        session()->flash('delete', 'تم حذف القسم بنجاح');
-        return redirect()->route('sections.index');
+        return Redirect::route('sections.index')->with('delete', 'تم حذف القسم بنجاح');
     }
 }
