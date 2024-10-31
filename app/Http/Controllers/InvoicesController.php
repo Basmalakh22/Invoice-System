@@ -17,7 +17,8 @@ class InvoicesController extends Controller
 
     public function index()
     {
-        return view('invoices.invoices');
+        $invoices = Invoices::all();
+        return view('invoices.invoices',compact('invoices'));
     }
 
 
@@ -33,7 +34,7 @@ class InvoicesController extends Controller
         Invoices::create([
             'invoice_number' => $request->invoice_number,
             'invoice_Date' => $request->invoice_Date,
-            'Due_date' => $request->due_date,
+            'Due_date' => $request->Due_date,
             'product' => $request->product,
             'section_id' => $request->Section,
             'Amount_collection' => $request->Amount_collection,

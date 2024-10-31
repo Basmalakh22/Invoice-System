@@ -25,4 +25,8 @@ class Invoices extends Model
         'note',
         'Payment_Date',
     ];
+    public function section()
+    {
+        return $this->belongsTo(Sections::class,'section_id' ,'id');
+    }
 }

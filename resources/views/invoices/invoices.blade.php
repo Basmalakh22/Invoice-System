@@ -71,24 +71,36 @@
                                     <th class="border-bottom-0">الاجمالي</th>
                                     <th class="border-bottom-0">الحاله</th>
                                     <th class="border-bottom-0">الملاحظات</th>
+                                    <th class="border-bottom-0">العمليات</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                <tr>
-                                    <td>Donna Snider</td>
-                                    <td>Customer Support</td>
-                                    <td>New York</td>
-                                    <td>27</td>
-                                    <td>2011/01/25</td>
-                                    <td>$112,000</td>
-                                    <td>Donna Snider</td>
-                                    <td>Customer Support</td>
-                                    <td>New York</td>
-                                    <td>27</td>
-                                    <td>2011/01/25</td>
-                                    <td>$112,000</td>
-                                </tr>
+                                @foreach ($invoices as $invoice)
+                                    <tr>
+                                        <td>{{ $invoice->id }}</td>
+                                        <td>{{ $invoice->invoice_number }}</td>
+                                        <td>{{ $invoice->invoice_Date }}</td>
+                                        <td>{{ $invoice->Due_date }}</td>
+                                        <td>{{ $invoice->product }}</td>
+                                        <td>
+                                            <a href="{{ route('InvoiceDetail.edit',$invoice->id) }}">{{ $invoice->section->section_name }}</a>
+                                        </td>
+                                        <td>{{ $invoice->Discount }}</td>
+                                        <td>{{ $invoice->Rate_VAT }}</td>
+                                        <td>{{ $invoice->Value_VAT }}</td>
+                                        <td>{{ $invoice->Total }}</td>
+                                        <td>
+                                            @if ($invoice->Value_Status == 1)
+                                                <span class="text-success">{{ $invoice->Status }}</span>
+                                            @elseif($invoice->Value_Status == 2)
+                                                <span class="text-danger">{{ $invoice->Status }}</span>
+                                            @else
+                                                <span class="text-warning">{{ $invoice->Status }}</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $invoice->note }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
