@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 @section('css')
     <!--- Internal Select2 css-->
@@ -13,7 +12,7 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
 @endsection
 @section('title')
-    اضافة فاتورة -  برنامج الفواتير
+    اضافة فاتورة - برنامج الفواتير
 @stop
 
 @section('page-header')
@@ -29,6 +28,15 @@
     <!-- breadcrumb -->
 @endsection
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     @if (session()->has('Add'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -157,8 +165,8 @@
                         <h5 class="card-title">المرفقات</h5>
 
                         <div class="col-sm-12 col-md-12">
-                            <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
-                                data-height="70" />
+                            <input type="file" name="pic" class="dropify"
+                                accept=".pdf,.jpg, .png, image/jpeg, image/png" data-height="70" />
                         </div><br>
 
                         <div class="d-flex justify-content-center">
@@ -210,7 +218,6 @@
         var date = $('.fc-datepicker').datepicker({
             dateFormat: 'yy-mm-dd'
         }).val();
-
     </script>
 
     <script>
@@ -237,7 +244,6 @@
             });
 
         });
-
     </script>
 
 
@@ -272,7 +278,6 @@
             }
 
         }
-
     </script>
 
 

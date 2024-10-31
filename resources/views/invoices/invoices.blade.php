@@ -25,6 +25,24 @@
     <!-- breadcrumb -->
 @endsection
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if (session()->has('Add'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('Add') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <!-- row -->
     <div class="row">
         <!--div-->
@@ -33,7 +51,7 @@
                 <div class="card-header pb-0">
                     <div class="col-sm-6 col-md-4 col-xl-3">
                         <a class="modal-effect btn btn-outline-primary btn-block"
-                             href="{{ route('invoices.create') }}">اضافه فاتوره</a>
+                            href="{{ route('invoices.create') }}">اضافه فاتوره</a>
                     </div>
                 </div>
                 <div class="card-body">
