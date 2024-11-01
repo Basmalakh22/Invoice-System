@@ -18,7 +18,7 @@ class InvoicesController extends Controller
     public function index()
     {
         $invoices = Invoices::all();
-        return view('invoices.invoices',compact('invoices'));
+        return view('invoices.invoices', compact('invoices'));
     }
 
 
@@ -92,15 +92,39 @@ class InvoicesController extends Controller
     }
 
 
-    public function edit(Invoices $invoices)
+    public function edit($id)
     {
-        //
+        $invoices = Invoices::findOrFail($id);
+        $sections = Sections::all();
+        return view('invoices.edit_invoice', compact('invoices', 'sections'));
     }
 
 
-    public function update(Request $request, Invoices $invoices)
+    public function update(Request $request, $id)
     {
-        //
+        $invoices = Invoices::findOrFail($id);
+        $invoices->update([
+            'invoice_number' => $request->invoice_number,
+            'invoice_Date' => $request->invoice_Date,
+            'Due_date' => $request->Due_date,
+            'product' => $request->product,
+            'section_id' => $request->Section,
+            'Amount_collection' => $request->Amount_collection,
+            'Amount_Commission' => $request->Amount_Commission,
+            'Discount' => $request->Discount,
+            'Value_VAT' => $request->Value_VAT,
+            'Rate_VAT' => $request->Rate_VAT,
+            'Total' => $request->Total,
+            'note' => $request->note,
+        ]);
+
+        $attachments = InvoiceAttachment::where('invoice_id', $id);
+        $details = InvoiceDetail::where('id_invoice', $id);
+
+        $attachments->update(['invoice_number' => $request->invoice_number]);
+        $details->update(['invoice_number' => $request->invoice_number]);
+
+        return Redirect::back()->with('edit', 'تم تعديل الفاتورة بنجاح');
     }
 
 
