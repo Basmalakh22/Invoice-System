@@ -47,14 +47,7 @@
 
 
 
-    @if (session()->has('delete'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>{{ session()->get('delete') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+    d
 
 
     <!-- row -->
@@ -226,16 +219,12 @@
                                                                 <td>{{ $attachment->created_at }}</td>
                                                                 <td>
 
-                                                                    <a class="btn btn-outline-success btn-sm"
-                                                                        href="{{ route('View_file', ['invoice_number' => $invoices->invoice_number, 'file_name' => urlencode($attachment->file_name)]) }}"
-                                                                        role="button"><i class="fas fa-eye"></i>&nbsp;
-                                                                        عرض</a>
-
-                                                                    <a class="btn btn-outline-info btn-sm"
-                                                                        href="{{ route('download', ['invoice_number' => $invoices->invoice_number, 'file_name' => $attachment->file_name]) }}"
-                                                                        role="button"><i
-                                                                            class="fas fa-download"></i>&nbsp;
-                                                                        تحميل</a>
+                                                                    <!-- Update Form -->
+                                                                    <button type="button"
+                                                                    class="btn btn-outline-primary btn-sm"
+                                                                    onclick="window.location.href='{{ route('attachment.edit', $attachment->id) }}'">
+                                                                    تعديل
+                                                                    </button>
 
 
                                                                     <button class="btn btn-outline-danger btn-sm"
@@ -244,6 +233,7 @@
                                                                         data-invoice_number="{{ $attachment->invoice_number }}"
                                                                         data-id_file="{{ $attachment->id }}"
                                                                         data-target="#delete_file">حذف</button>
+
                                                                 </td>
 
                                                             </tr>
@@ -275,7 +265,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('InvoiceDetail.destroy',$invoices->id) }}" method="post">
+                <form action="{{ route('InvoiceDetail.destroy', $invoices->id) }}" method="post">
 
                     @csrf
                     @method('DELETE')
@@ -334,7 +324,6 @@
             modal.find('.modal-body #file_name').val(file_name);
             modal.find('.modal-body #invoice_number').val(invoice_number);
         })
-
     </script>
 
     <script>
@@ -343,7 +332,5 @@
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
-
     </script>
-
 @endsection

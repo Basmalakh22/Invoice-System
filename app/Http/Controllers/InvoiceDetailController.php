@@ -43,9 +43,9 @@ class InvoiceDetailController extends Controller
         // Move the uploaded file to the specified path
         $file->move($path, $file->getClientOriginalName());
 
-        
 
-        return redirect()->back()->with('success', 'File uploaded successfully.');
+
+        return redirect()->back()->with('Add', 'File uploaded successfully.');
     }
 
 
@@ -84,26 +84,6 @@ class InvoiceDetailController extends Controller
         Storage::disk('public_uploads')->delete($request->invoice_number . '/' . $request->file_name);
         return Redirect::back()->with('delete', 'تم حذف المرفق بنجاح');
     }
-    public function viewFile($invoice_number, $file_name)
-    {
-        $path = storage_path('app/public/Attachements/' . $invoice_number . '/' . $file_name);
+   
 
-        if (!file_exists($path)) {
-            return abort(404);
-        }
-
-        return response()->file($path);
-    }
-
-
-    public function download($invoice_number, $file_name)
-    {
-        $path = storage_path('app/public/Attachements/' . $invoice_number . '/' . $file_name);
-
-        if (!file_exists($path)) {
-            return abort(404);
-        }
-
-        return response()->download($path);
-    }
 }
