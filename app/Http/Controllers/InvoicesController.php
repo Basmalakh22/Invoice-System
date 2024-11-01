@@ -90,6 +90,7 @@ class InvoicesController extends Controller
     public function show(Invoices $invoices, $id)
     {
         $invoices = Invoices::findOrFail($id);
+        return view('invoices.status_update',compact('invoices'));
     }
 
 
@@ -137,7 +138,6 @@ class InvoicesController extends Controller
         if (!empty($Details->invoice_number)) {
             Storage::disk('public_uploads')->deleteDirectory($Details->invoice_number);
         }
-
         $invoices->forceDelete();
 
         return Redirect::route('invoices.index')->with('delete_invoice', 'تم حذف الفاتورة بنجاح');
@@ -155,4 +155,48 @@ class InvoicesController extends Controller
 
         return response()->json($products, 200);
     }
+    public function Status_Update(Request $request,$id)
+    {
+        $invoices = Invoices::findOrFail($id);
+
+        if ($request->Status === 'مدفوعة') {
+
+            $invoices->update([
+                'Value_Status' => 1,
+                'Status' => $request->Status,
+                'Payment_Date' => $request->Payment_Date,
+            ]);
+
+            InvoiceDetail::create([
+                'id_Invoice' => $request->invoice_id,
+                'invoice_number' => $request->invoice_number,
+                'product' => $request->product,
+                'Section' => $request->Section,
+                'Status' => $request->Status,
+                'Value_Status' => 1,
+                'note' => $request->note,
+                'Payment_Date' => $request->Payment_Date,
+                'user' => (Auth::user()->name),
+            ]);
+        }else {
+            $invoices->update([
+                'Value_Status' => 3,
+                'Status' => $request->Status,
+                'Payment_Date' => $request->Payment_Date,
+            ]);
+            InvoiceDetail::create([
+                'id_Invoice' => $request->invoice_id,
+                'invoice_number' => $request->invoice_number,
+                'product' => $request->product,
+                'Section' => $request->Section,
+                'Status' => $request->Status,
+                'Value_Status' => 3,
+                'note' => $request->note,
+                'Payment_Date' => $request->Payment_Date,
+                'user' => (Auth::user()->name),
+            ]);
+        }
+        return Redirect::route('invoices.index')->with('Status_Update');
+    }
+
 }

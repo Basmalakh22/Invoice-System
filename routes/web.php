@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/invoices', InvoicesController::class);
 Route::get('/section/{id}', [InvoicesController::class,'getProducts']);
+Route::patch('/Status_Update/{id}', [InvoicesController::class,'Status_Update'])->name('Status_Update');
 
 Route::resource('/sections', SectionsController::class);
 

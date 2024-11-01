@@ -152,12 +152,12 @@
 
 
 
-                                                        {{-- <a class="dropdown-item"
-                                                            href="{{ URL::route('Status_show', [$invoice->id]) }}"><i
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('invoices.show',$invoice->id) }}"><i
                                                                 class=" text-success fas
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     fa-money-bill"></i>&nbsp;&nbsp;تغير
                                                             حالة
-                                                            الدفع</a> --}}
+                                                            الدفع</a>
 
 
 
