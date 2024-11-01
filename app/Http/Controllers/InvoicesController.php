@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class InvoicesController extends Controller
 {
@@ -86,9 +87,9 @@ class InvoicesController extends Controller
     }
 
 
-    public function show(Invoices $invoices)
+    public function show(Invoices $invoices, $id)
     {
-        //
+        $invoices = Invoices::findOrFail($id);
     }
 
 
@@ -124,14 +125,24 @@ class InvoicesController extends Controller
         $attachments->update(['invoice_number' => $request->invoice_number]);
         $details->update(['invoice_number' => $request->invoice_number]);
 
-        return Redirect::back()->with('edit', 'تم تعديل الفاتورة بنجاح');
+        return Redirect::route('invoices.index')->with('edit', 'تم تعديل الفاتورة بنجاح');
     }
 
 
-    public function destroy(Invoices $invoices)
+    public function destroy(Request $request, $id)
     {
-        //
+        $invoices = Invoices::findOrFail($id);
+        $Details = InvoiceAttachment::where('invoice_id', $id)->first();
+
+        if (!empty($Details->invoice_number)) {
+            Storage::disk('public_uploads')->deleteDirectory($Details->invoice_number);
+        }
+
+        $invoices->forceDelete();
+
+        return Redirect::route('invoices.index')->with('delete_invoice', 'تم حذف الفاتورة بنجاح');
     }
+
     public function getProducts($id): JsonResponse
     {
         $products = DB::table('products')
