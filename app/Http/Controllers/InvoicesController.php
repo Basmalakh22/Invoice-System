@@ -6,10 +6,13 @@ use App\Models\InvoiceAttachment;
 use App\Models\InvoiceDetail;
 use App\Models\Invoices;
 use App\Models\Sections;
+use App\Models\User;
+use App\Notifications\AddInvoice;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
@@ -83,6 +86,10 @@ class InvoicesController extends Controller
             $imageName = $request->pic->getClientOriginalName();
             $request->pic->move(public_path('Attachments/' . $invoice_number), $imageName);
         }
+        // $user = User::first();
+        // //$user->notify(new AddInvoice($invoice_id));       OR
+        // Notification::send($user,new AddInvoice($invoice_id));
+
         return Redirect::route('invoices.index')->with('Add', 'تم اضافة الفاتورة بنجاح');
     }
 
