@@ -90,7 +90,7 @@ class InvoicesController extends Controller
     public function show(Invoices $invoices, $id)
     {
         $invoices = Invoices::findOrFail($id);
-        return view('invoices.status_update',compact('invoices'));
+        return view('invoices.status_update', compact('invoices'));
     }
 
 
@@ -134,13 +134,20 @@ class InvoicesController extends Controller
     {
         $invoices = Invoices::findOrFail($id);
         $Details = InvoiceAttachment::where('invoice_id', $id)->first();
+        $id_page = $request->id_page;
 
-        if (!empty($Details->invoice_number)) {
-            Storage::disk('public_uploads')->deleteDirectory($Details->invoice_number);
+        if (!$id_page == 2) {
+            if (!empty($Details->invoice_number)) {
+                Storage::disk('public_uploads')->deleteDirectory($Details->invoice_number);
+            }
+            $invoices->forceDelete();
+
+            return Redirect::route('invoices.index')->with('delete_invoice', 'تم حذف الفاتورة بنجاح');
+        }else{
+            $invoices->delete();
+            return Redirect::route('InvoiceAchive.index')->with('archive_invoice', 'تم حذف الفاتورة بنجاح');
+
         }
-        $invoices->forceDelete();
-
-        return Redirect::route('invoices.index')->with('delete_invoice', 'تم حذف الفاتورة بنجاح');
     }
 
     public function getProducts($id): JsonResponse
@@ -155,7 +162,7 @@ class InvoicesController extends Controller
 
         return response()->json($products, 200);
     }
-    public function Status_Update(Request $request,$id)
+    public function Status_Update(Request $request, $id)
     {
         $invoices = Invoices::findOrFail($id);
 
@@ -178,7 +185,7 @@ class InvoicesController extends Controller
                 'Payment_Date' => $request->Payment_Date,
                 'user' => (Auth::user()->name),
             ]);
-        }else {
+        } else {
             $invoices->update([
                 'Value_Status' => 3,
                 'Status' => $request->Status,
@@ -198,5 +205,19 @@ class InvoicesController extends Controller
         }
         return Redirect::route('invoices.index')->with('Status_Update');
     }
-
+    public function Invoice_paid()
+    {
+        $invoices = Invoices::where('Value_Status', 1)->get();
+        return view('invoices.invoices_paid', compact('invoices'));
+    }
+    public function Invoice_unpaid()
+    {
+        $invoices = Invoices::where('Value_Status', 2)->get();
+        return view('invoices.invoices_unpaid', compact('invoices'));
+    }
+    public function Invoice_partial()
+    {
+        $invoices = Invoices::where('Value_Status', 3)->get();
+        return view('invoices.invoices_partial', compact('invoices'));
+    }
 }

@@ -94,32 +94,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @foreach ($products as $product)
+                                @if ($products->isEmpty())
                                     <tr>
-                                        <td>{{ $product->id }}</td>
-                                        <td>{{ $product->product_name }}</td>
-                                        <td>{{ $product->section->section_name }}</td>
-                                        <td>{{ $product->description }}</td>
-                                        <td>
-
-                                            <button class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                data-name="{{ $product->product_name }}" data-id="{{ $product->id }}"
-                                                data-section_name="{{ $product->section->section_name }}"
-                                                data-description="{{ $product->description }}" data-toggle="modal"
-                                                data-target="#edit_Product">تعديل</button>
-
-
-
-                                            <button class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                                data-id="{{ $product->id }}"
-                                                data-product_name="{{ $product->product_name }}" data-toggle="modal"
-                                                data-target="#modaldemo9">حذف</button>
-
-
-                                        </td>
+                                        <td colspan="13" class="text-center">لم يتم العثور علي
+                                            منتجات</td>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach ($products as $product)
+                                        <tr>
+                                            <td>{{ $product->id }}</td>
+                                            <td>{{ $product->product_name }}</td>
+                                            <td>{{ $product->section->section_name }}</td>
+                                            <td>{{ $product->description }}</td>
+                                            <td>
+
+                                                <button class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
+                                                    data-name="{{ $product->product_name }}" data-id="{{ $product->id }}"
+                                                    data-section_name="{{ $product->section->section_name }}"
+                                                    data-description="{{ $product->description }}" data-toggle="modal"
+                                                    data-target="#edit_Product">تعديل</button>
+
+
+
+                                                <button class="modal-effect btn btn-sm btn-danger"
+                                                    data-effect="effect-scale" data-id="{{ $product->id }}"
+                                                    data-product_name="{{ $product->product_name }}" data-toggle="modal"
+                                                    data-target="#modaldemo9">حذف</button>
+
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -228,9 +234,9 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('products.destroy',$product->id) }}" method="post">
+                    <form action="{{ route('products.destroy', $product->id) }}" method="post">
                         {{ method_field('delete') }}
-                       @csrf
+                        @csrf
                         <div class="modal-body">
                             <p>هل انت متاكد من عملية الحذف ؟</p><br>
                             <input type="hidden" name="id" id="id" value="">

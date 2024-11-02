@@ -211,33 +211,40 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($attachments as $attachment)
+                                                        @if ($attachments->isEmpty())
                                                             <tr>
-                                                                <td>{{ $attachment->id }}</td>
-                                                                <td>{{ $attachment->file_name }}</td>
-                                                                <td>{{ $attachment->Created_by }}</td>
-                                                                <td>{{ $attachment->created_at }}</td>
-                                                                <td>
-
-                                                                    <!-- Update Form -->
-                                                                    <button type="button"
-                                                                    class="btn btn-outline-primary btn-sm"
-                                                                    onclick="window.location.href='{{ route('attachment.edit', $attachment->id) }}'">
-                                                                    تعديل
-                                                                    </button>
-
-
-                                                                    <button class="btn btn-outline-danger btn-sm"
-                                                                        data-toggle="modal"
-                                                                        data-file_name="{{ $attachment->file_name }}"
-                                                                        data-invoice_number="{{ $attachment->invoice_number }}"
-                                                                        data-id_file="{{ $attachment->id }}"
-                                                                        data-target="#delete_file">حذف</button>
-
-                                                                </td>
-
+                                                                <td colspan="13" class="text-center">لم يتم العثور علي
+                                                                    الفواتير</td>
                                                             </tr>
-                                                        @endforeach
+                                                        @else
+                                                            @foreach ($attachments as $attachment)
+                                                                <tr>
+                                                                    <td>{{ $attachment->id }}</td>
+                                                                    <td>{{ $attachment->file_name }}</td>
+                                                                    <td>{{ $attachment->Created_by }}</td>
+                                                                    <td>{{ $attachment->created_at }}</td>
+                                                                    <td>
+
+                                                                        <!-- Update Form -->
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-primary btn-sm"
+                                                                            onclick="window.location.href='{{ route('attachment.edit', $attachment->id) }}'">
+                                                                            تعديل
+                                                                        </button>
+
+
+                                                                        <button class="btn btn-outline-danger btn-sm"
+                                                                            data-toggle="modal"
+                                                                            data-file_name="{{ $attachment->file_name }}"
+                                                                            data-invoice_number="{{ $attachment->invoice_number }}"
+                                                                            data-id_file="{{ $attachment->id }}"
+                                                                            data-target="#delete_file">حذف</button>
+
+                                                                    </td>
+
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                             </div>

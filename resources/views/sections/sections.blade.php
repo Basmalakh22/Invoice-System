@@ -85,6 +85,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if ($sections->isEmpty())
+                                    <tr>
+                                        <td colspan="13" class="text-center">لم يتم العثور علي
+                                            اقسام</td>
+                                    </tr>
+                                @else
                                 @foreach ($sections as $section)
                                     <tr>
                                         <td>{{ $section->id }}</td>
@@ -104,6 +110,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>

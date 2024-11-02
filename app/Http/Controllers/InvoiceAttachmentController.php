@@ -21,7 +21,7 @@ class InvoiceAttachmentController extends Controller
 
     public function create($id)
     {
-       
+
     }
 
 
@@ -66,38 +66,34 @@ class InvoiceAttachmentController extends Controller
     }
 
 
-    
+
     public function update(Request $request, $id)
     {
-        // Validate the request
+
         $request->validate([
-            'file_name' => 'required|file|mimes:pdf,jpeg,jpg,png|max:2048', // Adjust max size as needed
+            'file_name' => 'required|file|mimes:pdf,jpeg,jpg,png|max:2048',
         ]);
-    
-        // Find the existing attachment
+
         $attachment = InvoiceAttachment::findOrFail($id);
-    
-        // Handle the file upload
+
         if ($request->hasFile('file_name')) {
             // Delete the old file if necessary
             if (File::exists(public_path('attachments/' . $attachment->file_name))) {
                 File::delete(public_path('attachments/' . $attachment->file_name));
             }
-    
-            // Store the new file
+
             $file = $request->file('file_name');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('attachments'), $filename);
-    
-            // Update the attachment record
+
             $attachment->file_name = $filename;
         }
-    
+
         $attachment->save();
-    
+
         return redirect()->route('invoices.index')->with('edit', 'تم تحديث المرفق بنجاح');
     }
-    
+
 
 
 
