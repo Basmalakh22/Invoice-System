@@ -68,7 +68,12 @@
                 <div class="card-header pb-0">
                     <div class="col-sm-6 col-md-4 col-xl-3">
                         <a class="modal-effect btn btn-outline-primary btn-block"
-                            href="{{ route('invoices.create') }}">اضافه فاتوره</a>
+                            href="{{ route('invoices.create') }}">اضافه فاتوره
+                        </a>
+
+                        <a class="modal-effect btn btn-outline-primary btn-block" href="{{ url('export_invoices') }}">
+                            <i class="fas fa-file-download"></i>&nbsp;تصدير اكسيل
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">

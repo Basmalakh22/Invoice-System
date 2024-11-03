@@ -54,6 +54,7 @@ Route::get('Invoice_partial', [InvoicesController::class, 'Invoice_partial'])
     ->name('invoices.Invoice_partial');
 Route::get('Print_invoice/{id}', [InvoicesController::class, 'Print_invoice'])
     ->name('invoices.Print_invoice');
+Route::get('/export_invoices', [InvoicesController::class, 'export']);
 
 
 Route::resource('/sections', SectionsController::class);
