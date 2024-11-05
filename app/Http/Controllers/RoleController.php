@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\DB;
 class RoleController extends Controller
 {
 
-    // function __construct()
-    // {
-    //     $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
-    //     $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
-    //     $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
-    //     $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    // }
+    function __construct()
+    {
+        // $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
+        // $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
+        // $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
+        // $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+    }
 
     public function index(Request $request)
     {
@@ -39,7 +39,8 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
         $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        $permissionNames = Permission::whereIn('id', $request->input('permission'))->pluck('name')->toArray();
+        $role->syncPermissions($permissionNames);
         return redirect()->route('roles.index')
             ->with('success', 'Role created successfully');
     }
