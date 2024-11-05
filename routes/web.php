@@ -7,7 +7,9 @@ use App\Http\Controllers\InvoiceDetailController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SectionsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +71,14 @@ Route::get('/download/{invoice_number}/{file_name}', [InvoiceDetailController::c
 
 Route::resource('/InvoiceAchive',InvoiceAchiveController::class);
 
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles',RoleController::class);
+    Route::resource('users',UserController::class);
+    });
+Route::group(['middleware' => ['auth']], function() {
+        Route::resource('roles',RoleController::class);
+        Route::resource('users',UserController::class);
+        });
 
 require __DIR__ . '/auth.php';
 
