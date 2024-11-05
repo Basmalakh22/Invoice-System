@@ -50,19 +50,23 @@
                                 d="M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z" />
                         </svg><span class="side-menu__label">الفواتير</span><i class="angle fe fe-chevron-down"></i></a>
                     <ul class="slide-menu">
-                        @can('قائمه الفواتير')
+                        @can('قائمة الفواتير')
                             <li><a class="slide-item" href="{{ route('invoices.index') }}"> قائمه الفواتير</a></li>
                         @endcan
-                        @can('الفواتير المدفوعه')
+
+                        @can('الفواتير المدفوعة')
                             <li><a class="slide-item" href="{{ route('invoices.Invoice_paid') }}"> الفواتير المدفوعه</a></li>
                         @endcan
-                        @can('الفواتير الغير مدفوعه')
+
+                        @can('الفواتير الغير مدفوعة')
                             <li><a class="slide-item" href="{{ route('invoices.Invoice_unpaid') }}">الفواتير الغير مدفوعه </a>
                             </li>
                         @endcan
-                        @can('الفواتير المدفوعه جزئيا')
+
+                        @can('الفواتير المدفوعة جزئيا')
                             <li><a class="slide-item" href="{{ route('invoices.Invoice_partial') }}">الفواتير المدفوعه جزئيا</a></li>
                         @endcan
+
                         @can('ارشيف الفواتير')
                             <li><a class="slide-item" href="{{ route('InvoiceAchive.index') }}">ارشيف الفواتير</a></li>
                         @endcan

@@ -13,10 +13,10 @@ class RoleController extends Controller
 
     function __construct()
     {
-        // $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
-        // $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
-        // $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
-        // $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:عرض صلاحية', ['only' => ['index']]);
+        $this->middleware('permission:اضافة صلاحية', ['only' => ['create', 'store']]);
+        $this->middleware('permission:تعديل صلاحية', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
@@ -73,7 +73,8 @@ class RoleController extends Controller
         $role = Role::find($id);
         $role->name = $request->input('name');
         $role->save();
-        $role->syncPermissions($request->input('permission'));
+        $permissionNames = Permission::whereIn('id', $request->input('permission'))->pluck('name')->toArray();
+        $role->syncPermissions($permissionNames);
         return redirect()->route('roles.index')
             ->with('success', 'Role updated successfully');
     }
