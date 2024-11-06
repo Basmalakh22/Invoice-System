@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerReportController;
 use App\Http\Controllers\InvoiceAchiveController;
 use App\Http\Controllers\InvoiceAttachmentController;
 use App\Http\Controllers\InvoiceDetailController;
@@ -78,10 +79,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
 });
+
 Route::get('/invoices_report', [InvoiceReportController::class, 'index'])
     ->name('invoices.report');
 Route::post('/Search_invoices', [InvoiceReportController::class, 'Search_invoices'])
     ->name('invoices.search');
+
+Route::get('/customers_report', [CustomerReportController::class, 'index'])
+    ->name('customers.report');
+Route::post('/Search_customers', [CustomerReportController::class, 'Search_customers'])
+    ->name('customers.search');
 
 
 require __DIR__ . '/auth.php';

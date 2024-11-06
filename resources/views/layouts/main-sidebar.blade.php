@@ -18,7 +18,7 @@
             <div class="dropdown user-pro-body">
                 <div class="">
                     <img alt="user-img" class="avatar avatar-xl brround"
-                        src="{{ URL::asset('assets/img/faces/6.jpg') }}"><span
+                        src="{{ URL::asset('assets/img/faces/18.png') }}"><span
                         class="avatar-status profile-status bg-green"></span>
                 </div>
                 <div class="user-info">
@@ -86,7 +86,7 @@
                     </svg><span class="side-menu__label">التقارير</span><i class="angle fe fe-chevron-down"></i></a>
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="{{ route('invoices.report') }}">تقارير الفواتير</a></li>
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'darggablecards')) }}">تقارير العملاء</a>
+                    <li><a class="slide-item" href="{{ route('customers.report') }}">تقارير العملاء</a>
                     </li>
 
                 </ul>
