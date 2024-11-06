@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InvoiceAchiveController;
 use App\Http\Controllers\InvoiceAttachmentController;
 use App\Http\Controllers\InvoiceDetailController;
+use App\Http\Controllers\InvoiceReportController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -66,19 +67,22 @@ Route::resource('/products', ProductController::class);
 Route::resource('/attachment', InvoiceAttachmentController::class);
 
 Route::resource('/InvoiceDetail', InvoiceDetailController::class);
-Route::get('/View_file/{invoice_number}/{file_name}', [InvoiceDetailController::class, 'viewFile'])->name('View_file');
-Route::get('/download/{invoice_number}/{file_name}', [InvoiceDetailController::class, 'download'])->name('download');
+Route::get('/View_file/{invoice_number}/{file_name}', [InvoiceDetailController::class, 'viewFile'])
+    ->name('View_file');
+Route::get('/download/{invoice_number}/{file_name}', [InvoiceDetailController::class, 'download'])
+    ->name('download');
 
-Route::resource('/InvoiceAchive',InvoiceAchiveController::class);
+Route::resource('/InvoiceAchive', InvoiceAchiveController::class);
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles',RoleController::class);
-    Route::resource('users',UserController::class);
-    });
-Route::group(['middleware' => ['auth']], function() {
-        Route::resource('roles',RoleController::class);
-        Route::resource('users',UserController::class);
-        });
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+});
+Route::get('/invoices_report', [InvoiceReportController::class, 'index'])
+    ->name('invoices.report');
+Route::post('/Search_invoices', [InvoiceReportController::class, 'Search_invoices'])
+    ->name('invoices.search');
+
 
 require __DIR__ . '/auth.php';
 
