@@ -9,6 +9,7 @@ use App\Models\Invoices;
 use App\Models\Sections;
 use App\Models\User;
 use App\Notifications\AddInvoice;
+use App\Notifications\NewInvoiceAdded;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,6 +93,10 @@ class InvoicesController extends Controller
         // //$user->notify(new AddInvoice($invoice_id));       OR
         // Notification::send($user,new AddInvoice($invoice_id));
 
+        $user = User::get(); // user who has added invoice
+        $invoices = Invoices::latest()->first();
+        Notification::send($user, new NewInvoiceAdded($invoices));
+
         return Redirect::route('invoices.index')->with('Add', 'تم اضافة الفاتورة بنجاح');
     }
 
@@ -107,6 +112,7 @@ class InvoicesController extends Controller
     {
         $invoices = Invoices::findOrFail($id);
         $sections = Sections::all();
+        
         return view('invoices.edit_invoice', compact('invoices', 'sections'));
     }
 
