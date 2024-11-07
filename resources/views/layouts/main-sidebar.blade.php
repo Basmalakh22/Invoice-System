@@ -151,14 +151,13 @@
                         @can('الاقسام')
                             <li><a class="slide-item" href="{{ route('sections.index') }}">الاقسام</a></li>
                         @endcan
+
                         @can('المنتجات')
                             <li><a class="slide-item" href="{{ route('products.index') }}">المنتجات</a></li>
                         @endcan
                     </ul>
                 </li>
             @endcan
-
-
         </ul>
     </div>
 </aside>

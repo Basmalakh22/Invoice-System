@@ -11,7 +11,7 @@ class CustomerReportController extends Controller
     public function index()
     {
         $sections = Sections::all();
-        return view('reports.customer_report', compact('sections'));
+        return view('reports.customers_report', compact('sections'));
     }
     public function Search_customers(Request $request)
     {
