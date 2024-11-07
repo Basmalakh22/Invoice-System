@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Storage;
 class InvoiceDetailController extends Controller
 {
 
-    public function index() {}
+    public function index()
+    {
+        
+    }
 
 
     public function create()
@@ -84,6 +87,6 @@ class InvoiceDetailController extends Controller
         Storage::disk('public_uploads')->delete($request->invoice_number . '/' . $request->file_name);
         return Redirect::back()->with('delete', 'تم حذف المرفق بنجاح');
     }
-   
+
 
 }
